@@ -1,0 +1,92 @@
+::selection{
+    background:#000000;
+    color:#fff;
+}
+
+*{
+    margin: 0; padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background:#e0e0e0;
+
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    font-size: 18pt;
+    letter-spacing:-0.1pt;
+    line-height:1.5;
+    color: #1f1f1f;
+
+    padding: 3rem;
+}
+
+a{
+    display:inline-block;
+    line-height:0.95;
+    color:rgb(93, 93, 182);
+    text-decoration:none;
+
+    /* this is a hack to have border
+       break at type descenders */
+    border-bottom:1px solid rgb(93, 93, 182);
+    text-shadow: 1px 1px 0px #e0e0e0,
+                 -1px 1px 0px #e0e0e0;
+}
+
+h1{
+    font-size: 1.5rem;
+}
+
+.number{
+    /* font-family: "Menlo", monospace; */
+    font-weight:light;
+    opacity:0.4;
+}
+
+.header{
+    display:inline-block;
+    max-width: 20em;
+    margin-bottom:3rem;
+}
+
+.borough{
+    margin-bottom:1.3rem;
+}
+
+.bar{
+    background-color:#999;
+    display:block;
+    height:2rem;
+    margin-top: 0.5rem;
+}
+.color-0{
+    background-color:#BAC1B8;
+}
+.color-1{
+    background-color:#58A4B0;
+}
+.color-2{
+    background-color:#0C7C59;
+}
+.color-3{
+    /* background-color:#2B303A; */
+    background-color:#4e5166;
+}
+.color-4{
+    background-color:#D64933;
+}
+
+footer{
+    margin-top:3rem;
+    font-size:0.8em;
+}
+footer:before{
+    display:block;
+    content:' ';
+    background:#999;
+    height:1px;
+    width:100%;
+    max-width:200px;
+    margin-bottom: 1rem;
+}
