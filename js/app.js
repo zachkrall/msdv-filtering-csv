@@ -4,7 +4,9 @@
 
     // Our CSV is available client side
     // By using the "fetch" command
-    const data = await fetch(path)
+    const data = await fetch(path, {
+                            method: "GET"
+                        })
                        .then((data,error) => {
                            if(data.status != 200){
                                 throw error;
