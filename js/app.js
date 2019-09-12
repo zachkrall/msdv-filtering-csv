@@ -1,6 +1,6 @@
 (async () =>{
 
-    const path = '/data/Film_Permits.csv';
+    const path = './data/Film_Permits.csv';
 
     // Our CSV is available client side
     // By using the "fetch" command
