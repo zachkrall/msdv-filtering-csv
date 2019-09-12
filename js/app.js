@@ -23,6 +23,7 @@
         // Render an error message if an error
         // is generated in fetch call.
         addToDOM(`<b>Error</b><br/>Unable to load data from source provided.`);
+        console.log('path:', path);
     }
 })();
 
