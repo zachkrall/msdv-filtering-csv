@@ -70,13 +70,13 @@ function generateViz(data){
     // This one describes our min and max years
     // and total count.
     addToDOM(`Between <b>${minYear}&ndash;${maxYear}</b>
-    there were <b>${csv.length}</b> total film permits
+    there were <b>${niceNumber(csv.length)}</b> total film permits
     issued in New York City.`, 'header');
 
     Object.keys(boroughCount).forEach( (borough,index) => {
         let percent = boroughCount[borough]/csv.length * 150;
         addToDOM(`<b>${borough}</b>
-        <span class="number">${boroughCount[borough]}</span>
+        <span class="number">${niceNumber(boroughCount[borough])}</span>
         <span class="bar color-${index}"
               style="width:${percent}%;"></span>`, 'borough');
     });  
@@ -119,4 +119,25 @@ function addToDOM(string, className){
     
     // append to our <div id="app">
     document.getElementById('app').appendChild(div);
+}
+
+// This is a function that
+// take a number and inserts commas
+// where needed
+function niceNumber(input){
+    let number = input.toString();
+
+    if(number.length >= 4 && number.length < 7){
+        number = number.slice(0, number.length-3)
+               + ','
+               + number.slice(number.length-3,number.length);   
+    } else if(number.length >= 6 && number.length < 10){
+        number = number.slice(0, number.length-6)
+               + ','
+               + number.slice(number.length-6,number.length-3)
+               + ','
+               + number.slice(number.length-3,number.length);   
+    }
+    console.log(input, number);
+    return number;
 }
