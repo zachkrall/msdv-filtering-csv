@@ -33,7 +33,6 @@ const container = document.getElementById('app');
 })();
 
 function generateViz(data){
-
     // Clear
     container.innerHTML = '';
 
@@ -51,6 +50,7 @@ function generateViz(data){
 
     // generate Object from CSV
     let csv  = csvToObject(data);
+    const total = csv.length;
 
     csv = csv.filter(item => {
         return item["EventType"] == permitType;
@@ -102,6 +102,8 @@ function generateViz(data){
     addToDOM(`Between <b>${minYear}&ndash;${maxYear}</b>
     there are <b>${niceNumber(csv.length)}</b> total records for
     <b>${permitType}</b> in New York City.`, 'header');
+
+    addToDOM(`<b>${permitType.endsWith('Permit') ? permitType + 's' : permitType}</b> make up <b>${(csv.length / total * 100).toFixed(2)}%</b> of all (${niceNumber(total)}) film permit records.`, 'header');
 
     Object.keys(boroughCount).forEach( (borough,index) => {
         let percent = boroughCount[borough]/recordMax * 100;
