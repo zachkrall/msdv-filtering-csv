@@ -1,3 +1,5 @@
+const container = document.getElementById('app');
+
 (async () =>{
 
     const path = './data/Film_Permits.csv';
@@ -11,6 +13,7 @@
                            if(data.status != 200){
                                 throw error;
                            }
+                           // return our data as text
                            return data.text();
                         })
                         .catch( error => {
@@ -30,8 +33,28 @@
 })();
 
 function generateViz(data){
+
+    // Clear
+    container.innerHTML = '';
+
+    let permitOptions = [
+        "Shooting Permit",
+        "Theater Load in and Load Outs",
+        "Rigging Permit",
+        "DCAS Prep/Shoot/Wrap Permit"
+    ];
+
+    let permitType = permitOptions[
+        parseInt( Math.random() * permitOptions.length * 20 )
+        % permitOptions.length
+    ];
+
     // generate Object from CSV
-    const csv  = csvToObject(data);
+    let csv  = csvToObject(data);
+
+    csv = csv.filter(item => {
+        return item["EventType"] == permitType;
+    });
 
     // Create an empty object that will store
     // our total counts of objects
@@ -40,9 +63,10 @@ function generateViz(data){
     // Define empty variables
     // for our min and max years
     let minYear, maxYear;
+    let recordMax = 0;
 
     csv.forEach( entry => {
-        // this helps clean up the Entered On field to 
+        // this helps clean up the "Entered On" field to 
         // extract the year from it
         let year = entry.EnteredOn.split(' ')[0].split('/')[2];
 
@@ -63,6 +87,12 @@ function generateViz(data){
 
     });
 
+    Object.keys(boroughCount).forEach(key=>{
+        if(boroughCount[key] > recordMax){
+            recordMax = boroughCount[key];
+        }
+    });
+
     // Below, I've defined a function that helps append 
     // Template Literal Strings (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)
     // and takes a second parameter for a class name
@@ -70,11 +100,11 @@ function generateViz(data){
     // This one describes our min and max years
     // and total count.
     addToDOM(`Between <b>${minYear}&ndash;${maxYear}</b>
-    there were <b>${niceNumber(csv.length)}</b> total film permits
-    issued in New York City.`, 'header');
+    there are <b>${niceNumber(csv.length)}</b> total records for
+    <b>${permitType}</b> in New York City.`, 'header');
 
     Object.keys(boroughCount).forEach( (borough,index) => {
-        let percent = boroughCount[borough]/csv.length * 150;
+        let percent = boroughCount[borough]/recordMax * 100;
         addToDOM(`<b>${borough}</b>
         <span class="number">${niceNumber(boroughCount[borough])}</span>
         <span class="bar color-${index}"
@@ -118,7 +148,7 @@ function addToDOM(string, className){
     div.innerHTML = string;
     
     // append to our <div id="app">
-    document.getElementById('app').appendChild(div);
+    container.appendChild(div);
 }
 
 // This is a function that
@@ -138,6 +168,6 @@ function niceNumber(input){
                + ','
                + number.slice(number.length-3,number.length);   
     }
-    console.log(input, number);
+    // console.log(input, number);
     return number;
 }
